@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* ────────────────────────── NEURAXIS DESIGN TOKENS ──────────────────────────
+   "Engineering paper": warm paper, ink typography, electric ultramarine
+   wiring, signal-orange sparks. One identity across marketing, auth, and
+   the dashboard. */
+
+:root {
+  --background: #f6f6f2;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --border: rgba(14, 17, 22, 0.09);
+  --border-strong: rgba(14, 17, 22, 0.18);
+  --foreground: #0e1116;
+  --muted: #4d5360;
+  --faint: #878d9b;
+
+  --brand: #2742ff;          /* electric ultramarine */
+  --brand-bright: #1f36d8;
+  --accent: #ff5c1a;         /* signal orange */
+  --danger: #d92d20;
+  --warning: #b54708;
+  --success: #027a48;
+
+  --brand-rgb: 39, 66, 255;
+  --accent-rgb: 255, 92, 26;
+  --ink-rgb: 14, 17, 22;
+
+  --radius: 12px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(var(--brand-rgb), 0.18); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(var(--ink-rgb), 0.18); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(var(--ink-rgb), 0.32); }
+
+/* ────────────────────────── COMPONENT PRIMITIVES ────────────────────────── */
+
+@layer components {
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 2px rgba(var(--ink-rgb), 0.04);
+  }
+  .card-raised {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 16px 44px rgba(var(--ink-rgb), 0.10);
+  }
+  .input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: var(--foreground);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .input::placeholder { color: var(--faint); }
+  .input:focus {
+    border-color: rgba(var(--brand-rgb), 0.55);
+    box-shadow: 0 0 0 3px rgba(var(--brand-rgb), 0.14);
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #2742ff, #1f36d8);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 18px rgba(var(--brand-rgb), 0.30);
+  }
+  .btn-primary:hover { opacity: 0.94; box-shadow: 0 6px 26px rgba(var(--brand-rgb), 0.42); }
+  .btn-primary:active { transform: translateY(1px); }
+  .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--surface);
+    color: var(--foreground);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn-secondary:hover { background: rgba(var(--ink-rgb), 0.04); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-ghost:hover { background: rgba(var(--ink-rgb), 0.05); color: var(--foreground); }
+  .label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .field-error {
+    font-size: 12px;
+    color: var(--danger);
+    margin-top: 5px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: var(--surface);
+  }
+}
+
+/* Graph paper: fine 1px cross-grid, like an engineer's notebook */
+.grid-paper {
+  background-image:
+    linear-gradient(rgba(var(--ink-rgb), 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--ink-rgb), 0.055) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ────────────────────────── NEURAL WIRE SYSTEM ────────────────────────── */
+
+/* Light beam travelling along an SVG path. Pair with pathLength={100} and a
+   strokeDasharray like "10 90" — one dash cycle (offset -100) loops cleanly. */
+@keyframes nrx-beam-flow {
+  to { stroke-dashoffset: -100; }
+}
+.nrx-beam {
+  stroke-dashoffset: 0;
+  animation: nrx-beam-flow 5s linear infinite;
+}
+
+@keyframes nrx-orbit-spin {
+  to { transform: rotate(360deg); }
+}
+.nrx-orbit {
+  animation: nrx-orbit-spin 26s linear infinite;
+}
+
+/* Data pulse travelling a CSS motion path. Set --nrx-path per element. */
+@keyframes nrx-travel {
+  from { offset-distance: 0%; }
+  to   { offset-distance: 100%; }
+}
+.nrx-pulse {
+  offset-path: var(--nrx-path);
+  offset-rotate: 0deg;
+  animation: nrx-travel 2.8s linear infinite;
+}
+
+@keyframes nrx-caret {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+.nrx-caret {
+  animation: nrx-caret 1s step-end infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+/* One-shot wire draw for the logo mark (pair with pathLength/dasharray 100) */
+@keyframes nrx-draw {
+  from { stroke-dashoffset: 100; }
+  to   { stroke-dashoffset: 0; }
+}
+.nrx-draw {
+  animation: nrx-draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes nrx-appear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.nrx-appear {
+  animation: nrx-appear 0.3s ease both;
+}
+
+/* Reduced-motion guard intentionally removed: the site owner wants the wire
+   animations shown unconditionally. To restore a11y-compliant behaviour,
+   re-add: @media (prefers-reduced-motion: reduce) { .nrx-beam, .nrx-orbit,
+   .nrx-caret, .nrx-pulse { animation: none !important; } } */
